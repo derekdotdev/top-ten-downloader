@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,11 +18,14 @@ import java.net.URL;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private static final String RSS_FEED = "http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topfreeapplications/limit=10/xml";
+    private ListView listApps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        listApps = (ListView) findViewById(R.id.xmlListView);
+
         Log.d(TAG, "onCreate: starting AsyncTask");
         DownloadData downloadData = new DownloadData();
         downloadData.execute(RSS_FEED);
@@ -40,6 +45,11 @@ public class MainActivity extends AppCompatActivity {
 
             ParseApplications parseApplications = new ParseApplications();
             parseApplications.parse(s);
+
+            // Context, Where in layout to put data, Where in app to find data
+            ArrayAdapter<FeedEntry> arrayAdapter = new ArrayAdapter<>(
+                    MainActivity.this, R.layout.list_item, parseApplications.getApplications());
+            listApps.setAdapter(arrayAdapter);
         }
 
         /// ... = variable-length argument list (introduced in Java 5)
