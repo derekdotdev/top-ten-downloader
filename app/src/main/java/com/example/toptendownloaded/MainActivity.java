@@ -92,13 +92,13 @@ public class MainActivity extends AppCompatActivity {
                 reader.close();
                 return xmlResult.toString();
             } catch (MalformedURLException e) {
-                e.printStackTrace();
                 Log.e(TAG, "downloadXML: Invalid URL" + e.getMessage());
-            } catch (IOException e) {
                 e.printStackTrace();
+            } catch (IOException e) {
                 Log.e(TAG, "downloadXML: IOException " + e.getMessage());
+                e.printStackTrace();
             } catch (SecurityException e) {
-                Log.e(TAG, "downloadXML: Security Exception " + e.getMessage());
+                Log.e(TAG, "downloadXML: Security Exception. Needs permission? " + e.getMessage());
                 e.printStackTrace();
             }
             return null;
