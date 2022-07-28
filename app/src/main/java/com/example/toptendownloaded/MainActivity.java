@@ -54,8 +54,8 @@ public class MainActivity extends AppCompatActivity {
             // Custom FeedAdapter
             FeedAdapter feedAdapter = new FeedAdapter(MainActivity.this, R.layout.list_record, parseApplications.getApplications());
             listApps.setAdapter(feedAdapter);
-
         }
+
 
         /// ... = variable-length argument list (introduced in Java 5)
         // But instead of passing multiple URLs to one background thread,
