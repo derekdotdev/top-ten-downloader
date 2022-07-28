@@ -1,10 +1,13 @@
 package com.example.toptendownloaded;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -17,7 +20,9 @@ import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
-    private static final String RSS_FEED = "http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topfreeapplications/limit=10/xml";
+    private static final String RSS_TOP_TEN_FREE = "http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topfreeapplications/limit=10/xml";
+    public static final String RSS_TOP_TEN_PAID = "http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/toppaidapplications/limit=10/xml";
+    public static final String RSS_TOP_TEN_SONGS = "http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topsongs/limit=10/xml";
     private ListView listApps;
 
     @Override
@@ -26,12 +31,44 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         listApps = (ListView) findViewById(R.id.xmlListView);
 
-        Log.d(TAG, "onCreate: starting AsyncTask");
-        DownloadData downloadData = new DownloadData();
-        downloadData.execute(RSS_FEED);
-        Log.d(TAG, "onCreate: done");
+        downloadUrl(RSS_TOP_TEN_FREE);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Called when time to inflate from XML file
+        getMenuInflater().inflate(R.menu.feeds_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        String feedUrl;
+
+        switch(id) {
+            case R.id.mnuFree:
+                feedUrl = RSS_TOP_TEN_FREE;
+                break;
+            case R.id.mnuPaid:
+                feedUrl = RSS_TOP_TEN_PAID;
+                break;
+            case R.id.mnuSongs:
+                feedUrl = RSS_TOP_TEN_SONGS;
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        downloadUrl(feedUrl);
+        return true;
+    }
+
+    private void downloadUrl(String feedUrl) {
+        Log.d(TAG, "downloadUrl: starting AsyncTask");
+        DownloadData downloadData = new DownloadData();
+        downloadData.execute(feedUrl);
+        Log.d(TAG, "downloadUrl: done");
+    }
 
     // Create inner class (AsyncTask is deprecated)
     // <String=URL to RSS feed, Void=Info for ProgressBar, String=ResultReturnType
