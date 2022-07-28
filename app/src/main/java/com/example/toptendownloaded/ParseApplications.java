@@ -36,7 +36,7 @@ public class ParseApplications {
                 String tagName = xpp.getName();
                 switch(eventType) {
                     case XmlPullParser.START_TAG:
-                        Log.d(TAG, "parse: Starting tag for " + tagName);
+//                        Log.d(TAG, "parse: Starting tag for " + tagName);
                         if("entry".equalsIgnoreCase(tagName)) {
                             inEntry = true;
                             currentRecord = new FeedEntry();
@@ -50,7 +50,7 @@ public class ParseApplications {
                         break;
 
                     case XmlPullParser.END_TAG:
-                        Log.d(TAG, "parse: Ending tag for " + tagName);
+//                        Log.d(TAG, "parse: Ending tag for " + tagName);
                         if(inEntry) {
                             // tagName CAN be null, so writing "entry".equalsIgnoreCase is
                             // far more concise than writing tagName.equalsIC("entry")
@@ -78,10 +78,10 @@ public class ParseApplications {
                 eventType = xpp.next();
             }
 
-            for(FeedEntry app: applications) {
-                Log.d(TAG, "parse: **************************");
-                Log.d(TAG, app.toString());
-            }
+//            for(FeedEntry app: applications) {
+//                Log.d(TAG, "parse: **************************");
+//                Log.d(TAG, app.toString());
+//            }
         } catch (Exception e) {
             status = false;
             e.printStackTrace();;
