@@ -47,9 +47,14 @@ public class MainActivity extends AppCompatActivity {
             parseApplications.parse(s);
 
             // Context, Where in layout to put data, Where in app to find data
-            ArrayAdapter<FeedEntry> arrayAdapter = new ArrayAdapter<>(
-                    MainActivity.this, R.layout.list_item, parseApplications.getApplications());
-            listApps.setAdapter(arrayAdapter);
+//            ArrayAdapter<FeedEntry> arrayAdapter = new ArrayAdapter<>(
+//                    MainActivity.this, R.layout.list_item, parseApplications.getApplications());
+//            listApps.setAdapter(arrayAdapter);
+
+            // Custom FeedAdapter
+            FeedAdapter feedAdapter = new FeedAdapter(MainActivity.this, R.layout.list_record, parseApplications.getApplications());
+            listApps.setAdapter(feedAdapter);
+
         }
 
         /// ... = variable-length argument list (introduced in Java 5)
