@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,12 +25,14 @@ public class MainActivity extends AppCompatActivity {
     private String feedCachedUrl = "INVALIDATED";
     public static final String STATE_URL = "feedUrl";
     public static final String STATE_LIMIT = "feedLimit";
+    private TextView tvTitle;
     private ListView listApps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        tvTitle = (TextView) findViewById(R.id.xmlTextViewTitle);
         listApps = (ListView) findViewById(R.id.xmlListView);
 
         if(savedInstanceState != null) {
@@ -126,6 +129,13 @@ public class MainActivity extends AppCompatActivity {
             // Custom FeedAdapter
             FeedAdapter feedAdapter = new FeedAdapter(MainActivity.this, R.layout.list_record, parseApplications.getApplications());
             listApps.setAdapter(feedAdapter);
+            String tempTitle = parseApplications.getFeedTitle().getTitle();
+            String title = tempTitle.substring(0,17);
+            String tempTitleEnd = tempTitle.substring(17);
+            title += " " + feedLimit;
+            title += tempTitleEnd;
+
+            tvTitle.setText(title);
         }
 
 
