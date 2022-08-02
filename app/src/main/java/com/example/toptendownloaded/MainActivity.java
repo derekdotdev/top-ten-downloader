@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
 //            listApps.setAdapter(arrayAdapter);
 
             // Custom FeedAdapter
-            FeedAdapter feedAdapter = new FeedAdapter(MainActivity.this, R.layout.list_record, parseApplications.getApplications());
+            FeedAdapter<FeedEntry> feedAdapter = new FeedAdapter<>(MainActivity.this, R.layout.list_record, parseApplications.getApplications());
             listApps.setAdapter(feedAdapter);
             String tempTitle = parseApplications.getFeedTitle().getTitle();
             String title = tempTitle.substring(0,17);
