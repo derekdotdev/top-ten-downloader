@@ -21,9 +21,9 @@ public class FeedAdapter extends ArrayAdapter {
 
     public FeedAdapter(@NonNull Context context, int resource, List<FeedEntry> applications) {
         super(context, resource);
-        this.layoutResource = resource;
         // Don't create LayoutInflater. Get it from context.
         this.layoutInflater = LayoutInflater.from(context);
+        this.layoutResource = resource;
         this.applications = applications;
     }
 

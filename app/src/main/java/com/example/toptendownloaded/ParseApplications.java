@@ -11,14 +11,17 @@ import java.util.ArrayList;
 public class ParseApplications {
     private static final String TAG = "ParseApplications";
     private ArrayList<FeedEntry> applications;
+    private FeedTitle feedTitle;
 
     public ParseApplications() {
+        this.feedTitle = new FeedTitle("");
         this.applications = new ArrayList<>();
     }
 
     public ArrayList<FeedEntry> getApplications() {
         return applications;
     }
+    public FeedTitle getFeedTitle() { return feedTitle; }
 
     public boolean parse(String xmlData) {
         boolean status = true;
@@ -37,6 +40,7 @@ public class ParseApplications {
                 switch(eventType) {
                     case XmlPullParser.START_TAG:
 //                        Log.d(TAG, "parse: Starting tag for " + tagName);
+
                         if("entry".equalsIgnoreCase(tagName)) {
                             inEntry = true;
                             currentRecord = new FeedEntry();
@@ -51,6 +55,7 @@ public class ParseApplications {
 
                     case XmlPullParser.END_TAG:
 //                        Log.d(TAG, "parse: Ending tag for " + tagName);
+
                         if(inEntry) {
                             // tagName CAN be null, so writing "entry".equalsIgnoreCase is
                             // far more concise than writing tagName.equalsIC("entry")
@@ -68,6 +73,10 @@ public class ParseApplications {
                                 currentRecord.setSummary(textValue);
                             } else if("image".equalsIgnoreCase(tagName)) {
                                 currentRecord.setImageURL(textValue);
+                            }
+                        } else {
+                            if("title".equalsIgnoreCase(tagName)) {
+                                feedTitle.setTitle(textValue);
                             }
                         }
                         break;
