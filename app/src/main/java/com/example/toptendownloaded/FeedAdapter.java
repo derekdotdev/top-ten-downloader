@@ -1,6 +1,7 @@
 package com.example.toptendownloaded;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,13 +39,15 @@ public class FeedAdapter extends ArrayAdapter {
 
         if(convertView == null) {
             // parent = list_record XML used for this view. Gives us access to text views
+            Log.d(TAG, "getView: called with null convertView");
             convertView = layoutInflater.inflate(layoutResource, parent, false);
             viewHolder = new ViewHolder(convertView);
             convertView.setTag(viewHolder);
         } else {
+            Log.d(TAG, "getView: provided a convertView");
             viewHolder = (ViewHolder) convertView.getTag();
         }
-
+//        Before adding if check above
 //        TextView tvName = (TextView) convertView.findViewById(R.id.tvName);
 //        TextView tvArtist = (TextView) convertView.findViewById(R.id.tvArtist);
 //        TextView tvSummary = (TextView) convertView.findViewById(R.id.tvSummary);
